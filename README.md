@@ -1,1 +1,1 @@
-# flyrank-capstone
+# FlyRank Capstone - Front-end AI Engineering track project.
