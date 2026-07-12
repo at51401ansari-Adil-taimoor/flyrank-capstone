@@ -1,0 +1,18 @@
+# Project: FlyRank Capstone
+
+## Stack
+- Frontend: React + Next.js
+- Backend/API: Node.js
+- Package manager: npm
+
+## Conventions
+- Use functional components with hooks (no class components)
+- Use TypeScript where possible
+- Follow Conventional Commits for all commit messages (feat:, fix:, docs:, chore:, etc.)
+- Keep components small and single-purpose
+- Use ESLint + Prettier formatting
+
+## AI Assistant Notes
+- Prioritize clean, readable code over cleverness
+- Explain non-obvious logic with comments
+- Ask before introducing new dependencies
