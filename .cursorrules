@@ -16,3 +16,15 @@
 - Prioritize clean, readable code over cleverness
 - Explain non-obvious logic with comments
 - Ask before introducing new dependencies
+
+## Rules learned from FE-02 workflow drill
+- Any auth or login logic must be checked against actual registered data, never 
+  assume success. If credentials are not matched against a real or mock data 
+  source, treat the form as visually complete but functionally incorrect.
+- All form submit handlers must call event.preventDefault() in onSubmit, and any 
+  non-submit button inside a <form> (e.g. show/hide password) must explicitly use 
+  type="button" to avoid accidentally triggering submission.
+- A feature is not done when automated tests pass; it is done when it has also 
+  been manually verified in the browser on localhost. Test suites can pass while 
+  real browser behavior still differs (e.g. environment-specific issues like 
+  network vs localhost).
