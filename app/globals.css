@@ -1,0 +1,52 @@
+:root {
+  --flyrank-navy: #0f172a;
+  --flyrank-primary: #1e293b;
+  --flyrank-accent: #0369a1;
+  --flyrank-bg: #f1f5f9;
+  --flyrank-surface: #ffffff;
+  --flyrank-text: #0f172a;
+  --flyrank-muted: #64748b;
+  --flyrank-border: #cbd5e1;
+  --flyrank-error: #b91c1c;
+  --flyrank-success: #166534;
+  --flyrank-focus: #0369a1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  color: var(--flyrank-text);
+  background: var(--flyrank-bg);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--flyrank-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--flyrank-focus);
+  outline-offset: 2px;
+}

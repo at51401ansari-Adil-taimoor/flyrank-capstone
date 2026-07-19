@@ -1,0 +1,66 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(180deg, #f8fafc 0%, var(--flyrank-bg) 100%);
+}
+
+.card {
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem;
+  border: 1px solid var(--flyrank-border);
+  border-radius: 0.75rem;
+  background: var(--flyrank-surface);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.75rem;
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--flyrank-navy);
+}
+
+.logoAccent {
+  color: var(--flyrank-primary);
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--flyrank-muted);
+}
+
+.title {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  color: var(--flyrank-navy);
+}
+
+.subtitle {
+  margin: 0 0 1.5rem;
+  color: var(--flyrank-muted);
+  font-size: 0.95rem;
+}
+
+.footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--flyrank-muted);
+}
+
+.footer a {
+  font-weight: 600;
+}
