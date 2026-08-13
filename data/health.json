@@ -1,0 +1,9 @@
+{
+  "status": "ok",
+  "uptime": 123456,
+  "services": {
+    "database": "ok",
+    "ai-model": "not-configured",
+    "queue": "ok"
+  }
+}
