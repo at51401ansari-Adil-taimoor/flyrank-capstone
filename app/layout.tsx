@@ -1,9 +1,5 @@
 import '../styles/globals.css'
 import Link from 'next/link'
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata = {
   title: 'AI Study Planner',
@@ -12,7 +8,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en">
       <body>
         <div className="min-h-screen flex flex-col">
           <header className="bg-white border-b">
