@@ -17,6 +17,10 @@
     "module": "ESNext",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "types": [
       "node"
     ],
