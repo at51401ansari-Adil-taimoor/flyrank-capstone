@@ -1,5 +1,6 @@
-import { createUIMessageStreamResponse, convertToModelMessages, streamText, toUIMessageStream } from 'ai';
+import { createUIMessageStreamResponse, convertToModelMessages, isStepCount, streamText, toUIMessageStream } from 'ai';
 import { STUDY_PLAN_MODEL_SETTINGS, STUDY_PLAN_SYSTEM_PROMPT, studyPlanModel } from '@/lib/ai-config';
+import { generateStudySchedule } from '@/lib/tools/study-schedule';
 
 export const runtime = 'nodejs';
 
@@ -21,6 +22,8 @@ export async function POST(request: Request) {
       system: STUDY_PLAN_SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages),
       maxOutputTokens: STUDY_PLAN_MODEL_SETTINGS.maxOutputTokens,
+      tools: { generateStudySchedule },
+      stopWhen: isStepCount(3),
     });
 
     void result.finishReason.then(finishReason => {
@@ -35,6 +38,7 @@ export async function POST(request: Request) {
     return createUIMessageStreamResponse({
       stream: toUIMessageStream({
         stream: result.stream,
+        onError: error => (error instanceof Error ? error.message : 'Tool execution failed.'),
       }),
     });
   } catch (error) {
