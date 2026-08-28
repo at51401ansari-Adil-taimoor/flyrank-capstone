@@ -73,6 +73,24 @@ function StudyScheduleToolPart({ part }: { part: any }) {
             <div className="mt-1 font-medium">{input.hoursPerDay ?? '—'}</div>
           </div>
         </div>
+
+        {/* Skeleton preview of the schedule table that will appear once output is ready */}
+        <div className="mt-3 overflow-hidden rounded-xl border border-amber-200 bg-white/60">
+          {/* Skeleton header row */}
+          <div className="flex gap-3 border-b border-amber-200 bg-amber-100/60 px-3 py-2.5">
+            <div className="h-3 w-16 animate-pulse rounded bg-amber-200" />
+            <div className="h-3 w-28 animate-pulse rounded bg-amber-200" />
+            <div className="h-3 w-10 animate-pulse rounded bg-amber-200" />
+          </div>
+          {/* Skeleton data rows */}
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex gap-3 border-b border-amber-100 px-3 py-2.5 last:border-b-0">
+              <div className="h-3 w-16 animate-pulse rounded bg-slate-200" />
+              <div className="h-3 w-32 animate-pulse rounded bg-slate-200" />
+              <div className="h-3 w-8 animate-pulse rounded bg-slate-200" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
