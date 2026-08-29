@@ -91,3 +91,39 @@ body {
     color: var(--foreground);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Send-button choreography keyframes
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Subtle horizontal shake – 6 steps, total duration ~400 ms */
+@keyframes btn-shake {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-5px); }
+  30%  { transform: translateX(5px); }
+  45%  { transform: translateX(-4px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+  90%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+/* SVG stroke draw-on for the checkmark */
+@keyframes btn-check-draw {
+  from { stroke-dashoffset: 20; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.btn-spin  { animation: btn-spin  0.7s linear infinite; }
+.btn-shake { animation: btn-shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+.btn-check { stroke-dasharray: 20; animation: btn-check-draw 0.3s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-spin  { animation: none; }
+  .btn-shake { animation: none; transform: none; }
+  .btn-check { animation: none; stroke-dashoffset: 0; }
+}
