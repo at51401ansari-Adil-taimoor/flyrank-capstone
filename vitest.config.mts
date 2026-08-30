@@ -4,8 +4,11 @@ import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
   plugins: [
-    // Explicitly use Babel transform for JSX with react-jsx runtime,
-    // bypassing the tsconfig jsx:preserve setting that Next.js requires.
+    // @vitejs/plugin-react v4 uses Babel internally. We pass @babel/preset-react
+    // explicitly so it correctly transforms JSX even though tsconfig.json sets
+    // jsx:"preserve" (which is required by Next.js for its own compilation).
+    // @babel/preset-react is pinned to ^7.x in package.json so it is compatible
+    // with the project's @babel/core@7.x and does not break Vercel's npm install.
     react({
       jsxRuntime: 'automatic',
       babel: {
