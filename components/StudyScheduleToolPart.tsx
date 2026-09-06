@@ -132,11 +132,12 @@ export default function StudyScheduleToolPart({ part }: ToolPartProps) {
 
         <div className="overflow-hidden rounded-xl border border-slate-200">
           <table className="min-w-full divide-y divide-slate-200 text-left text-sm text-slate-700">
+            <caption className="sr-only">Study schedule — daily topics and hours</caption>
             <thead className="bg-slate-50">
               <tr>
-                <th className="px-3 py-2.5 font-semibold text-slate-700">Date</th>
-                <th className="px-3 py-2.5 font-semibold text-slate-700">Topic</th>
-                <th className="px-3 py-2.5 font-semibold text-slate-700">Hours</th>
+                <th scope="col" className="px-3 py-2.5 font-semibold text-slate-700">Date</th>
+                <th scope="col" className="px-3 py-2.5 font-semibold text-slate-700">Topic</th>
+                <th scope="col" className="px-3 py-2.5 font-semibold text-slate-700">Hours</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">

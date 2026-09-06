@@ -405,17 +405,18 @@ export default function StudyPlanPage() {
   };
 
   return (
-    <section className="relative flex h-[calc(100vh-12rem)] min-h-[420px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <section aria-labelledby="study-plan-heading" className="relative flex h-[calc(100vh-12rem)] min-h-[420px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 sm:px-6">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Study planner</p>
-          <h2 className="text-lg font-semibold text-slate-900">AI study plan chat</h2>
+          <h2 id="study-plan-heading" className="text-lg font-semibold text-slate-900">AI study plan chat</h2>
         </div>
         {isGenerating && (
           <button
             type="button"
             onClick={() => stop()}
-            className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-medium text-rose-700 transition hover:bg-rose-100"
+            aria-label="Stop generating"
+            className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-medium text-rose-700 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2"
           >
             Stop
           </button>
@@ -425,6 +426,8 @@ export default function StudyPlanPage() {
       <div
         ref={containerRef}
         onScroll={onScroll}
+        aria-live="polite"
+        aria-label="Chat messages"
         className="flex-1 space-y-4 overflow-y-auto bg-slate-50 px-3 py-4 sm:px-5"
       >
         {messages.length === 0 && (
@@ -482,7 +485,8 @@ export default function StudyPlanPage() {
               <button
                 type="button"
                 onClick={retryLastMessage}
-                className="mt-2 inline-flex rounded-full bg-rose-600 px-3 py-1.5 font-medium text-white transition hover:bg-rose-500"
+                aria-label="Retry sending last message"
+                className="mt-2 inline-flex rounded-full bg-rose-600 px-3 py-1.5 font-medium text-white transition hover:bg-rose-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2"
               >
                 Retry
               </button>
@@ -514,7 +518,7 @@ export default function StudyPlanPage() {
           <button
             type="button"
             onClick={scrollToBottom}
-            className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-lg transition hover:bg-slate-50"
+            className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-lg transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2"
           >
             Jump to latest
           </button>
@@ -567,7 +571,7 @@ export default function StudyPlanPage() {
             type="button"
             onClick={() => runDemo('success')}
             disabled={demoForcedState === 'loading'}
-            className="rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 transition hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 transition hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-1"
           >
             Force Success
           </button>
@@ -575,7 +579,7 @@ export default function StudyPlanPage() {
             type="button"
             onClick={() => runDemo('error')}
             disabled={demoForcedState === 'loading'}
-            className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-[11px] font-medium text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-[11px] font-medium text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-1"
           >
             Force Error
           </button>

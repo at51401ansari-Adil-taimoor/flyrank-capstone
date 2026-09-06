@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <header className="bg-white border-b">
             <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
               <h1 className="text-lg font-semibold">AI Study Planner</h1>
-              <nav className="space-x-4">
+              <nav aria-label="Main navigation" className="space-x-4">
                 <Link href="/" className="text-sm text-primary">Dashboard</Link>
                 <Link href="/courses" className="text-sm text-primary">Courses</Link>
                 <Link href="/study-plan" className="text-sm text-primary">Study Plan</Link>
