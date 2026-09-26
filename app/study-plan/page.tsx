@@ -405,186 +405,217 @@ export default function StudyPlanPage() {
   };
 
   return (
-    <section aria-labelledby="study-plan-heading" className="relative flex h-[calc(100vh-12rem)] min-h-[420px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 sm:px-6">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Study planner</p>
-          <h2 id="study-plan-heading" className="text-lg font-semibold text-slate-900">AI study plan chat</h2>
-        </div>
-        {isGenerating && (
-          <button
-            type="button"
-            onClick={() => stop()}
-            aria-label="Stop generating"
-            className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-medium text-rose-700 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2"
-          >
-            Stop
-          </button>
-        )}
+    <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full py-6 px-0 sm:px-4 bg-slate-50">
+      {/* Page header */}
+      <div className="mb-4 px-1">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 mb-0.5">Study Planner</p>
+        <h2 id="study-plan-heading" className="text-xl font-bold text-slate-900 tracking-tight">AI Study Plan Chat</h2>
       </div>
 
-      <div
-        ref={containerRef}
-        onScroll={onScroll}
-        aria-live="polite"
-        aria-label="Chat messages"
-        className="flex-1 space-y-4 overflow-y-auto bg-slate-50 px-3 py-4 sm:px-5"
+      {/* Chat card */}
+      <section
+        aria-labelledby="study-plan-heading"
+        className="relative flex flex-col flex-1 min-h-[480px] bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden"
       >
-        {messages.length === 0 && (
-          <div className="mt-8 rounded-2xl border border-dashed border-slate-200 bg-white p-5 text-sm text-slate-600">
-            Tell me which courses you are studying, your exam dates, and how many hours you can commit each day.
+        {/* ── Card header banner ──────────────────────────────────────────── */}
+        <div className="flex items-center justify-between border-b border-slate-200 bg-white px-5 py-3.5">
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+            </span>
+            <span className="text-sm font-semibold text-slate-700">Gemini 1.5 Flash</span>
+            <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">Active</span>
           </div>
-        )}
-
-        {messages.map(message => (
-          <div
-            key={message.id}
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-[88%] rounded-2xl px-4 py-3 shadow-sm sm:max-w-[80%] ${
-                message.role === 'user'
-                  ? 'bg-sky-600 text-white'
-                  : 'border border-slate-200 bg-white text-slate-800'
-              }`}
+          {isGenerating && (
+            <button
+              type="button"
+              onClick={() => stop()}
+              aria-label="Stop generating"
+              className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2"
             >
-              <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] opacity-70">
-                {message.role === 'user' ? 'You' : 'Study AI'}
-              </div>
-
-              {message.parts.map((part, index) => {
-                if (part.type === 'text') {
-                  return (
-                    <div key={`${message.id}-${index}`}>
-                      {renderTextPart(part.text)}
-                    </div>
-                  );
-                }
-
-                if (part.type === 'tool-generateStudySchedule') {
-                  return (
-                    <div
-                      key={`${message.id}-${index}`}
-                      className={part.state === 'output-available' ? 'transition-all duration-200 ease-out' : ''}
-                    >
-                      <StudyScheduleToolPart part={part as any} />
-                    </div>
-                  );
-                }
-
-                return null;
-              })}
-            </div>
-          </div>
-        ))}
-
-        {hasError && (
-          <div className="flex justify-center">
-            <div className="max-w-md rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 shadow-sm">
-              <p className="font-medium">Something went wrong reaching the AI. Please try again.</p>
-              <button
-                type="button"
-                onClick={retryLastMessage}
-                aria-label="Retry sending last message"
-                className="mt-2 inline-flex rounded-full bg-rose-600 px-3 py-1.5 font-medium text-white transition hover:bg-rose-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2"
-              >
-                Retry
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div
-          className={`pointer-events-none flex justify-center transition-all duration-300 ${
-            showThinking ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
-          }`}
-          aria-live="polite"
-        >
-          {showThinking && (
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 shadow-sm">
-              <span className="flex items-center gap-1">
-                <span className="h-2 w-2 animate-bounce rounded-full bg-slate-400 [animation-delay:0ms]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-slate-400 [animation-delay:150ms]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-slate-400 [animation-delay:300ms]" />
-              </span>
-              Thinking
-            </div>
+              Stop
+            </button>
           )}
         </div>
-      </div>
 
-      {showJumpToLatest && (
-        <div className="absolute inset-x-0 bottom-20 flex justify-center px-4">
-          <button
-            type="button"
-            onClick={scrollToBottom}
-            className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-lg transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2"
+        {/* ── Messages feed ───────────────────────────────────────────────── */}
+        <div
+          ref={containerRef}
+          onScroll={onScroll}
+          aria-live="polite"
+          aria-label="Chat messages"
+          className="flex-1 overflow-y-auto px-4 py-5 sm:px-6 space-y-4 bg-slate-50/60"
+        >
+          {messages.length === 0 && (
+            <div className="mt-6 rounded-2xl border border-dashed border-slate-200 bg-white/80 p-6 text-sm text-slate-500 text-center">
+              <p className="font-medium text-slate-700 mb-1">Ready to plan your studies?</p>
+              <p>Tell me which courses you are studying, your exam dates, and how many hours you can commit each day.</p>
+            </div>
+          )}
+
+          {messages.map(message => (
+            <div
+              key={message.id}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`flex flex-col gap-1 max-w-[80%] sm:max-w-[75%] ${
+                  message.role === 'user' ? 'items-end' : 'items-start'
+                }`}
+              >
+                {/* Role label */}
+                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400 px-1">
+                  {message.role === 'user' ? 'You' : 'Study AI'}
+                </span>
+
+                {/* Bubble */}
+                <div
+                  className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-xs ${
+                    message.role === 'user'
+                      ? 'bg-indigo-600 text-white rounded-tr-sm'
+                      : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm'
+                  }`}
+                >
+                  {message.parts.map((part, index) => {
+                    if (part.type === 'text') {
+                      return (
+                        <div key={`${message.id}-${index}`}>
+                          {renderTextPart(part.text)}
+                        </div>
+                      );
+                    }
+
+                    if (part.type === 'tool-generateStudySchedule') {
+                      return (
+                        <div
+                          key={`${message.id}-${index}`}
+                          className={part.state === 'output-available' ? 'transition-all duration-200 ease-out' : ''}
+                        >
+                          <StudyScheduleToolPart part={part as any} />
+                        </div>
+                      );
+                    }
+
+                    return null;
+                  })}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Error banner */}
+          {hasError && (
+            <div className="flex justify-center">
+              <div className="max-w-md rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-xs">
+                <p className="font-medium">Something went wrong reaching the AI. Please try again.</p>
+                <button
+                  type="button"
+                  onClick={retryLastMessage}
+                  aria-label="Retry sending last message"
+                  className="mt-2 inline-flex rounded-full bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Thinking indicator */}
+          <div
+            className={`pointer-events-none flex justify-start transition-all duration-300 ${
+              showThinking ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
+            }`}
+            aria-live="polite"
           >
-            Jump to latest
-          </button>
+            {showThinking && (
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-500 shadow-xs">
+                <span className="flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-indigo-400 [animation-delay:0ms]" />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-indigo-400 [animation-delay:150ms]" />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-indigo-400 [animation-delay:300ms]" />
+                </span>
+                Thinking…
+              </div>
+            )}
+          </div>
         </div>
-      )}
 
-      <div className="border-t border-slate-200 bg-white/95 px-3 py-3 backdrop-blur-sm sm:px-5">
-        <form onSubmit={submitMessage} className="flex items-end gap-3">
-          <label className="sr-only" htmlFor="study-plan-prompt">
-            Enter your study plan prompt
-          </label>
-          <textarea
-            id="study-plan-prompt"
-            value={input}
-            onChange={event => setInput(event.target.value)}
-            rows={1}
-            placeholder="Ask for a study plan..."
-            disabled={isInputDisabled}
-            className="max-h-32 min-h-[48px] flex-1 resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:outline-none focus:ring-4 focus:ring-sky-100 disabled:cursor-not-allowed disabled:bg-slate-100"
-            onKeyDown={event => {
-              if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                const form = event.currentTarget.form;
-                if (form) {
-                  form.requestSubmit();
+        {/* Jump to latest */}
+        {showJumpToLatest && (
+          <div className="absolute inset-x-0 bottom-24 flex justify-center px-4">
+            <button
+              type="button"
+              onClick={scrollToBottom}
+              className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 shadow-lg transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2"
+            >
+              ↓ Jump to latest
+            </button>
+          </div>
+        )}
+
+        {/* ── Input bar ───────────────────────────────────────────────────── */}
+        <div className="border-t border-slate-200 bg-white/95 px-4 py-3 sm:px-5 backdrop-blur-sm">
+          <form onSubmit={submitMessage} className="flex items-end gap-3">
+            <label className="sr-only" htmlFor="study-plan-prompt">
+              Enter your study plan prompt
+            </label>
+            <textarea
+              id="study-plan-prompt"
+              value={input}
+              onChange={event => setInput(event.target.value)}
+              rows={1}
+              placeholder="Ask for a study plan…"
+              disabled={isInputDisabled}
+              className="max-h-32 min-h-[48px] flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100 transition"
+              onKeyDown={event => {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                  event.preventDefault();
+                  const form = event.currentTarget.form;
+                  if (form) {
+                    form.requestSubmit();
+                  }
                 }
-              }
-            }}
-          />
+              }}
+            />
 
-          <SendButton
-            isLoading={isGenerating}
-            isError={hasError}
-            isDisabled={!input.trim() || isInputDisabled}
-            onActivate={retryLastMessage}
-            forcedState={demoForcedState}
-          />
-        </form>
+            <SendButton
+              isLoading={isGenerating}
+              isError={hasError}
+              isDisabled={!input.trim() || isInputDisabled}
+              onActivate={retryLastMessage}
+              forcedState={demoForcedState}
+            />
+          </form>
 
-        {/* ── Demo controls ──────────────────────────────────────────────────
-            These buttons are for design review only and are NOT part of the
-            normal user flow. They simulate the Send button's loading →
-            success / error choreography without calling the real chat API.
-        ─────────────────────────────────────────────────────────────────── */}
-        <div className="mt-2 flex items-center gap-2 border-t border-dashed border-slate-200 pt-2">
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
-            Demo
-          </span>
-          <button
-            type="button"
-            onClick={() => runDemo('success')}
-            disabled={demoForcedState === 'loading'}
-            className="rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 transition hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-1"
-          >
-            Force Success
-          </button>
-          <button
-            type="button"
-            onClick={() => runDemo('error')}
-            disabled={demoForcedState === 'loading'}
-            className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-[11px] font-medium text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-1"
-          >
-            Force Error
-          </button>
+          {/* ── Demo controls ──────────────────────────────────────────────────
+              These buttons are for design review only and are NOT part of the
+              normal user flow. They simulate the Send button's loading →
+              success / error choreography without calling the real chat API.
+          ─────────────────────────────────────────────────────────────────── */}
+          <div className="mt-2 flex items-center gap-2 border-t border-dashed border-slate-200 pt-2">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+              Demo
+            </span>
+            <button
+              type="button"
+              onClick={() => runDemo('success')}
+              disabled={demoForcedState === 'loading'}
+              className="text-xs px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-1"
+            >
+              Force Success
+            </button>
+            <button
+              type="button"
+              onClick={() => runDemo('error')}
+              disabled={demoForcedState === 'loading'}
+              className="text-xs px-2.5 py-1 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-1"
+            >
+              Force Error
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

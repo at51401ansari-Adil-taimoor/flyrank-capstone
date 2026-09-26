@@ -6,20 +6,52 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
 
   return (
-    <section>
-      <h2 className="text-2xl font-bold mb-2">Login</h2>
-      <p className="text-gray-700 mb-4">A login form for students to access their study plans.</p>
-      <form className="space-y-3 max-w-sm">
+    <div className="min-h-[70vh] flex items-center justify-center py-12 px-4 bg-slate-50">
+      <div className="max-w-md w-full bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+        {/* Header */}
         <div>
-          <label htmlFor="login-email" className="block text-sm">Email</label>
-          <input id="login-email" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="mt-1 block w-full rounded border px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400" />
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 mb-1">Account</p>
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Welcome back</h2>
+          <p className="mt-1 text-sm text-slate-500">Sign in to access your study plans.</p>
         </div>
-        <div>
-          <label htmlFor="login-password" className="block text-sm">Password</label>
-          <input id="login-password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="mt-1 block w-full rounded border px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400" />
-        </div>
-        <button type="button" className="px-4 py-2 bg-primary text-white rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400">Login (placeholder)</button>
-      </form>
-    </section>
+
+        {/* Form */}
+        <form className="space-y-4">
+          <div>
+            <label htmlFor="login-email" className="block text-sm font-medium text-slate-700 mb-1">
+              Email
+            </label>
+            <input
+              id="login-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@university.edu"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+            />
+          </div>
+          <div>
+            <label htmlFor="login-password" className="block text-sm font-medium text-slate-700 mb-1">
+              Password
+            </label>
+            <input
+              id="login-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+            />
+          </div>
+          <button
+            type="button"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+          >
+            Log in (placeholder)
+          </button>
+        </form>
+      </div>
+    </div>
   )
 }
+
